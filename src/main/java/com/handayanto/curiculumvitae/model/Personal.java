@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -25,7 +23,7 @@ public class Personal {
     private String lastName;
 
     @Column(name = "born_date", nullable = false)
-    private LocalDate bornDate;
+    private String bornDate;
 
     @Column
     @Size(max = 50)
@@ -42,6 +40,7 @@ public class Personal {
         private String institution;
         private String year;
     }
+
 
     public Long getId() {
         return id;
@@ -67,11 +66,11 @@ public class Personal {
         this.lastName = lastName;
     }
 
-    public LocalDate getBornDate() {
+    public String getBornDate() {
         return bornDate;
     }
 
-    public void setBornDate(LocalDate bornDate) {
+    public void setBornDate(String bornDate) {
         this.bornDate = bornDate;
     }
 
