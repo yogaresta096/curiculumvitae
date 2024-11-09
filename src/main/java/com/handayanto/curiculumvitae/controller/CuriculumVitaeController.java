@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -30,13 +28,13 @@ public class CuriculumVitaeController {
 
     @GetMapping
     public ResponseEntity<List<Personal>> getAllPersonal(){
-        logger.info("===personalService====");
+        logger.info("===Personal Service====");
         return ResponseEntity.ok(personalService.getAllPersonal());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<String> getPersonalById(@PathVariable Long id) {
-        logger.info("===personalService====");
+        logger.info("===Personal Service====");
         return personalService.getPersonalById(id)
                 .map(personal -> {
                     String responsePersonal = Json.encode(personal);
