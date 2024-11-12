@@ -31,13 +31,13 @@ public class ExperienceController {
                 .map(experience -> ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(experience))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Mengembalikan 404 jika tidak ditemukan
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping
     public ResponseEntity<Experiences> createExperience(@RequestBody Experiences experiences) {
         if (experiences == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // Mengembalikan 400 jika data tidak valid
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Experiences createdExperience = experiencesService.createExperience(experiences);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdExperience);
@@ -47,7 +47,7 @@ public class ExperienceController {
     public ResponseEntity<Experiences> updateExperience(@PathVariable Long idExperience, @RequestBody Experiences experiences) {
         Experiences updatedExperience = experiencesService.updateExperience(idExperience, experiences);
         if (updatedExperience == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Mengembalikan 404 jika tidak ditemukan
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(updatedExperience);
     }
