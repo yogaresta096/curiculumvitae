@@ -1,5 +1,6 @@
 package com.handayanto.curiculumvitae.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import javax.validation.constraints.NotNull;
@@ -34,6 +35,7 @@ public class Personal {
     private List<EducationInfo> educations;
 
     @OneToMany(mappedBy = "personal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Experiences> experiences;
 
     @Embeddable

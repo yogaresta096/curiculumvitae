@@ -1,5 +1,6 @@
 package com.handayanto.curiculumvitae.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,7 +25,9 @@ public class Experiences {
 
     @ManyToOne
     @JoinColumn(name = "personal_id", nullable = false)
+    @JsonIgnore
     private Personal personal;
 
-
+    @Column(name = "personal_id", insertable = false, updatable = false )
+    private Long personalId;
 }

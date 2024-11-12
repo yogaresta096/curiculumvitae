@@ -2,17 +2,13 @@ package com.handayanto.curiculumvitae.controller;
 
 import com.handayanto.curiculumvitae.model.Experiences;
 import com.handayanto.curiculumvitae.service.ExperiencesService;
-import io.vertx.core.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cv/experience")
@@ -20,24 +16,46 @@ public class ExperienceController {
     private final ExperiencesService experiencesService;
 
     @Autowired
-    public ExperienceController(ExperiencesService experiencesService){
+    public ExperienceController(ExperiencesService experiencesService) {
         this.experiencesService = experiencesService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Experiences>> getAllExperience(){
-        return ResponseEntity.ok(experiencesService.getAllExperience());
+    public ResponseEntity<List<Experiences>> getAllExperience() {
+        List<Experiences> experiencesList = experiencesService.getAllExperience();
+        return ResponseEntity.ok(experiencesList);
     }
 
     @GetMapping("{idExperience}")
-    public Optional<ResponseEntity<String>> getExperienceById(@PathVariable Long idExperience){
+    public ResponseEntity<Experiences> getExperienceById(@PathVariable Long idExperience) {
         return experiencesService.getExperienceById(idExperience)
-                .map(experiences -> {
-                    String responseExperience = Json.encode(experiences);
-                    return ResponseEntity.ok()
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .body(responseExperience);
-                });
+                .map(experience -> ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(experience))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Mengembalikan 404 jika tidak ditemukan
     }
 
+    @PostMapping
+    public ResponseEntity<Experiences> createExperience(@RequestBody Experiences experiences) {
+        if (experiences == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // Mengembalikan 400 jika data tidak valid
+        }
+        Experiences createdExperience = experiencesService.createExperience(experiences);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdExperience);
+    }
+
+    @PutMapping("{idExperience}")
+    public ResponseEntity<Experiences> updateExperience(@PathVariable Long idExperience, @RequestBody Experiences experiences) {
+        Experiences updatedExperience = experiencesService.updateExperience(idExperience, experiences);
+        if (updatedExperience == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Mengembalikan 404 jika tidak ditemukan
+        }
+        return ResponseEntity.ok(updatedExperience);
+    }
+
+    @DeleteMapping("{idExperience}")
+    public ResponseEntity<Void> deleteExperience(@PathVariable Long idExperience) {
+        experiencesService.deleteExperience(idExperience);
+        return ResponseEntity.noContent().build(); // Mengembalikan 204 No Content setelah penghapusan
+    }
 }
