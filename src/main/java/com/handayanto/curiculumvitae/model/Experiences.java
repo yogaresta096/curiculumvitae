@@ -11,6 +11,9 @@ public class Experiences {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idExperience;
 
+    @Column(name = "personal_id", insertable = false, updatable = false )
+    private Long personalId;
+
     @Column(name = "job_title")
     private String jobTitle;
 
@@ -23,11 +26,9 @@ public class Experiences {
     @Column(name = "end_date")
     private String endDate;
 
+
     @ManyToOne
     @JoinColumn(name = "personal_id", nullable = false)
-    @JsonIgnore
     private Personal personal;
 
-    @Column(name = "personal_id", insertable = false, updatable = false )
-    private Long personalId;
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/cv/experience")
+@RequestMapping("/api/cv/experiences")
 public class ExperienceController {
     private final ExperiencesService experiencesService;
 
@@ -22,8 +22,7 @@ public class ExperienceController {
 
     @GetMapping
     public ResponseEntity<List<Experiences>> getAllExperience() {
-        List<Experiences> experiencesList = experiencesService.getAllExperience();
-        return ResponseEntity.ok(experiencesList);
+        return ResponseEntity.ok(experiencesService.getAllExperience());
     }
 
     @GetMapping("{idExperience}")
