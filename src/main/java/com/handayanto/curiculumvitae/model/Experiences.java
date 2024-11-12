@@ -10,9 +10,6 @@ public class Experiences {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idExperience;
 
-    @Column(name = "personal_id", nullable = false)
-    private Long personalId;
-
     @Column(name = "job_title")
     private String jobTitle;
 
