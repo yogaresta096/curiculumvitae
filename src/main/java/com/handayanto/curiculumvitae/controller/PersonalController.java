@@ -17,12 +17,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cv/personal")
-public class CuriculumVitaeController {
+public class PersonalController {
     private final PersonalService personalService;
-    private static final Logger logger = LoggerFactory.getLogger(CuriculumVitaeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PersonalController.class);
 
     @Autowired
-    public CuriculumVitaeController(PersonalService personalService){
+    public PersonalController(PersonalService personalService){
         this.personalService = personalService;
     }
 

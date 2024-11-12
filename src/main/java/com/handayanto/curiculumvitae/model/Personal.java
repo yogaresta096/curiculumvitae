@@ -33,60 +33,14 @@ public class Personal {
     @CollectionTable(name = "education", joinColumns = @JoinColumn(name = "personal_id"))
     private List<EducationInfo> educations;
 
+    @OneToMany(mappedBy = "personal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Experiences> experiences;
+
     @Embeddable
     @Data
     public static class EducationInfo {
         private String degree;
         private String institution;
         private String year;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getBornDate() {
-        return bornDate;
-    }
-
-    public void setBornDate(String bornDate) {
-        this.bornDate = bornDate;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public List<EducationInfo> getEducations() {
-        return educations;
-    }
-
-    public void setEducations(List<EducationInfo> educations) {
-        this.educations = educations;
     }
 }
