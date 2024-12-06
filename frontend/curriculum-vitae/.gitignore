@@ -1,0 +1,35 @@
+# Frontend
+frontend/*/node_modules/
+frontend/*/.env
+frontend/*/.env.local
+frontend/*/.env.development
+frontend/*/.env.production
+frontend/*/.env.test
+frontend/*/build/
+frontend/*/.DS_Store
+frontend/*/.vscode/
+frontend/*/coverage/
+frontend/*/.idea/
+frontend/*/*.log
+
+# Backend
+backend/target/
+backend/.mvn/
+backend/*.log
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/*.iml
+backend/.idea/
+backend/application*.yml
+backend/application*.properties
+backend/.vscode/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db 
