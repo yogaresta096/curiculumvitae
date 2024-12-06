@@ -15,12 +15,12 @@ public class SecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorizeRequests ->
-                        authorizeRequests
+                .authorizeHttpRequests(auth ->
+                        auth
                                 .requestMatchers("/api/cv/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .httpBasic(); // Menggunakan otentikasi dasar
+                .httpBasic();
 
         return http.build();
     }

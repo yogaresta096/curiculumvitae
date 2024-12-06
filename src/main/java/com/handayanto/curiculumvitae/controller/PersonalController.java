@@ -7,10 +7,13 @@ import io.vertx.core.json.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -57,8 +60,18 @@ public class PersonalController {
                             .body(responseErrorPersonal);
                 });
     }
-    @PostMapping
-    public ResponseEntity<Personal> createPersonal(@RequestBody Personal personal){
-        return ResponseEntity.ok(personalService.createPersonal(personal));
+    @PostMapping("/create")
+    public ResponseEntity<?> createPersonal(@Valid @RequestBody Personal personal, BindingResult bindingResult){
+        logger.info("===Create Personal Service===");
+        if (bindingResult.hasErrors()){
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            Personal newPersonal = personalService.createPersonal(personal);
+            return new ResponseEntity<>(newPersonal, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
