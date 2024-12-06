@@ -74,4 +74,10 @@ public class PersonalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deletePersonal(@PathVariable Long id) {
+        personalService.deletePersonal(id);
+        return ResponseEntity.noContent().build();
+    }
 }

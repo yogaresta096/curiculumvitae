@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,11 +33,11 @@ public class Personal {
 
     @ElementCollection
     @CollectionTable(name = "education", joinColumns = @JoinColumn(name = "personal_id"))
-    private List<EducationInfo> educations;
+    private List<EducationInfo> educations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "personal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "personal", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Experiences> experiences;
+    private List<Experiences> experiences = new ArrayList<>();
 
     @Embeddable
     @Data

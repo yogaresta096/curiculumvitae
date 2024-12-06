@@ -55,6 +55,6 @@ public class ExperienceController {
     @DeleteMapping("{idExperience}")
     public ResponseEntity<Void> deleteExperience(@PathVariable Long idExperience) {
         experiencesService.deleteExperience(idExperience);
-        return ResponseEntity.noContent().build(); // Mengembalikan 204 No Content setelah penghapusan
+        return ResponseEntity.noContent().build();
     }
 }
