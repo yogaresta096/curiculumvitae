@@ -1,0 +1,7 @@
+/* home.css */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Pastikan body memenuhi tinggi layar */
+    overflow: hidden; /* Menghindari scroll */
+}
