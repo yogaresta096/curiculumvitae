@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Card, CardContent, Typography, Button, CircularProgress } from '@mui/material';
+import { Container, Card, CardContent, Typography, CircularProgress } from '@mui/material';
 import { getPersonalById } from '../services/PersonalService';
+import HomeAppBar from '../components/HomeAppBar';
+import { useNavigate } from 'react-router-dom';
+import { PERSONAL_ID } from '../config/ConfigGetData';
 
 function Home() {
-
     const [personalData, setPersonalData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const personalId = 1;
+    const navigate = useNavigate();
+    const personalId = PERSONAL_ID;
 
     useEffect(() => {
         const fetchPersonalData = async () => {
@@ -16,9 +19,8 @@ function Home() {
             try {
                 const data = await getPersonalById(personalId);
                 setPersonalData(data);
-                console.log("Data fetched:", data);
             } catch (err) {
-                setError("Data Doesn't Exist");
+                setError("Connection is failure " + err);
                 console.error("Error:", err);
             } finally {
                 setLoading(false);
@@ -26,7 +28,11 @@ function Home() {
         };
 
         fetchPersonalData();
-    }, []);
+    }, [personalId]);
+
+    const handleNavigateToExperiences = () => {
+        navigate(`/experiences`);
+    };
 
     return (
         <Container 
@@ -34,31 +40,28 @@ function Home() {
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
         >
             <Card 
-                style={{ width: '100%', maxWidth: '400px', borderRadius: '16px' }} 
+                style={{ width: '100%', maxWidth: '100%', borderRadius: '16px' }} 
                 elevation={3}
+                onClick={handleNavigateToExperiences}
             >
                 <CardContent>
                     {loading ? (
-                        <CircularProgress style={{alignItems: 'center'}} />
+                        <CircularProgress style={{ alignItems: 'center' }} />
                     ) : error ? (
                         <Typography variant="body2" color="error">
                             {error}
                         </Typography>
                     ) : personalData ? (
-                        <>
-                            <Typography variant="h5" component="div" style={{ textAlign: 'center',fontFamily: 'Poppins, sans-serif' }}>
-                                Hi Im {personalData.firstName} {personalData.lastName}
-                            </Typography>
-                        </>
+                        <Typography variant="h5" component="div" style={{ textAlign: 'center', fontFamily: 'Poppins, sans-serif' }}>
+                            Hi I'm {personalData.firstName} {personalData.lastName}
+                        </Typography>
                     ) : (
                         <Typography variant='body2' color='text.secondary'>
                             Data Not Found
                         </Typography>
                     )}
-                    <Button variant="contained" style={{ marginTop: '16px' }}>
-                        Pelajari Lebih Lanjut
-                    </Button>
                 </CardContent>
+                <HomeAppBar />
             </Card>
         </Container>
     );
